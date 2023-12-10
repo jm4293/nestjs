@@ -1,13 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import { Cat } from './entity/cats.entity';
-import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable } from "@nestjs/common";
+import { Repository } from "typeorm";
+import { Cat } from "./entity/cats.entity";
+import { InjectRepository } from "@nestjs/typeorm";
 
 @Injectable()
 export class CatsService {
   constructor(
     @InjectRepository(Cat)
-    private catsRepository: Repository<Cat>,
+    private catsRepository: Repository<Cat>
   ) {}
 
   findAll(): Promise<Cat[]> {
@@ -26,7 +26,7 @@ export class CatsService {
     const existCat = await this.catsRepository.findOne({ where: { id } });
 
     if (!existCat) {
-      throw new Error('Cat not found');
+      throw new Error("Cat not found");
     } else {
       await this.catsRepository.delete(id);
     }
@@ -46,9 +46,6 @@ export class CatsService {
       //   })
       //   .where('id = :id', { id: id })
       //   .execute();
-
-      console.log(existCat)
-      console.log(cat)
 
       Object.assign(existCat, cat);
       return await this.catsRepository.save(existCat);
